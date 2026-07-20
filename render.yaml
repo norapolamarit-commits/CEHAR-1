@@ -1,0 +1,30 @@
+# Render Blueprint — deploy อัตโนมัติเมื่อ push ขึ้น GitHub
+#
+# วิธีใช้: ที่ Render เลือก New → Blueprint แล้วชี้ไปยัง repo นี้
+# Render จะอ่านไฟล์นี้และตั้งค่าให้เองทั้งหมด
+#
+# ถ้าตั้งค่าเองผ่านหน้าเว็บแทน ให้ใช้ค่าเหล่านี้:
+#   Type              Static Site
+#   Build Command     npm ci && npm run build
+#   Publish Directory dist
+#   Rewrite Rule      Source /*  →  Destination /index.html  (Action: Rewrite)
+
+services:
+  - type: web
+    name: cehar-dashboard
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+
+    # สำคัญมาก — เว็บนี้เป็น SPA ที่จัดการเส้นทางเองด้วย React Router
+    # ถ้าไม่มีกฎนี้ การเปิด /overview หรือ /map ตรง ๆ หรือกดรีเฟรชจะขึ้น 404
+    # เพราะบนเซิร์ฟเวอร์ไม่มีไฟล์ชื่อนั้นอยู่จริง
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
