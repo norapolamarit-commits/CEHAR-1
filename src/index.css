@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------
+   Design tokens — โทนทะเล (ocean palette)
+   ประกาศใน @theme ของ Tailwind v4 เพื่อให้ใช้เป็น utility ได้ทันที
+   เช่น bg-navy, text-teal, border-seafoam, bg-risk-high
+   --------------------------------------------------------------- */
+@theme {
+  --color-navy: #1b4965;
+  --color-deep: #065a82;
+  --color-teal: #1c7293;
+  --color-seafoam: #5ca7b4;
+  --color-mist: #f4f8fa;
+
+  /* ระดับความเสี่ยง */
+  --color-risk-low: #1c7293;
+  --color-risk-medium: #d9a441;
+  --color-risk-high: #c0392b;
+
+  --font-sans: 'IBM Plex Sans Thai', ui-sans-serif, system-ui, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-mist);
+  /* ไล่เฉดจาง ๆ ไม่ให้พื้นหลังแบนตาย — ตรึงไว้กับ viewport จะได้ไม่เลื่อนตามเนื้อหา */
+  background-image:
+    radial-gradient(58rem 40rem at 100% -12%, rgba(92, 167, 180, 0.14), transparent 60%),
+    radial-gradient(46rem 38rem at -12% 108%, rgba(27, 73, 101, 0.08), transparent 58%);
+  background-attachment: fixed;
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* เงาการ์ดแบบสองชั้น — ชั้นคมบาง ๆ กับชั้นฟุ้งกว้าง ให้ดูลอยแบบธรรมชาติ */
+.card-shadow {
+  box-shadow:
+    0 1px 2px rgba(27, 73, 101, 0.05),
+    0 10px 28px -14px rgba(27, 73, 101, 0.28);
+}
+
+/* การ์ดที่กดได้ — ยกตัวขึ้นเล็กน้อยตอนชี้
+   (ต้องเขียน :hover ที่นี่ เพราะ Tailwind เติม hover: ให้คลาส CSS ธรรมดาไม่ได้) */
+.card-lift {
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 2px rgba(27, 73, 101, 0.06),
+    0 18px 40px -18px rgba(27, 73, 101, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-lift:hover {
+    transform: none;
+  }
+}
+
+/* ตัวเลขอ่านง่ายขึ้นเวลาวางเรียงกันในตาราง/การ์ด KPI */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Leaflet: ปรับให้กลมกลืนกับธีม --- */
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: #dbeaf0;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  border-radius: 0.75rem;
+}
+
+.leaflet-bar a {
+  color: var(--color-navy);
+}
+
+/* คลิกหมุดแล้วไม่ต้องขึ้นกรอบ focus สี่เหลี่ยม แต่ยังคงกรอบไว้เมื่อใช้คีย์บอร์ด */
+.leaflet-interactive:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* scrollbar บาง ๆ ในแผงด้านข้าง */
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: rgb(0 0 0 / 0.15);
+  border-radius: 999px;
+}
