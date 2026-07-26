@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "archive_and_raster": {
+    "sha256": "c2fcb1be182e1cbb40cbecd835e6c32a51a256c8ea7045904d968aa06e2a3d1c",
+    "image_pairs": 23,
+    "source_raster_shape": [
+      128,
+      128,
+      3
+    ],
+    "transformed_shape": [
+      64,
+      64,
+      3
+    ]
+  },
+  "tabular_training_and_shap": {
+    "rows": {
+      "train": 160,
+      "val": 40,
+      "test": 40
+    },
+    "models": {
+      "random_forest": {
+        "validation_RMSE": 6.359948947624669
+      },
+      "xgboost": {
+        "validation_RMSE": 5.907804179227774
+      }
+    },
+    "selected": "xgboost",
+    "shap_shape": [
+      5,
+      7
+    ]
+  },
+  "segmentation_forward_pass": {
+    "unet": [
+      1,
+      2,
+      64,
+      64
+    ],
+    "deeplabv3plus": [
+      1,
+      2,
+      64,
+      64
+    ]
+  },
+  "budget_optimization": {
+    "selected_indices": [
+      1,
+      2
+    ],
+    "total_cost": 70.0
+  },
+  "pathumma_rag_retrieval": {
+    "chunk_count": 3,
+    "chunk_overlap_chars": 6,
+    "top_indices": [
+      0,
+      1,
+      2
+    ],
+    "top_scores": [
+      1.0,
+      0.6000000238418579,
+      0.0
+    ],
+    "threshold_accepted_indices": [
+      0,
+      1
+    ],
+    "reasoning_block_removed": true,
+    "refusal_gate_present": true,
+    "citation_guard_present": true,
+    "pathumma_model_execution": "not_run_locally_requires_colab_gpu"
+  },
+  "versions": {
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "torch": "2.8.0",
+    "rasterio": "1.4.3",
+    "shap": "0.46.0",
+    "faiss": "1.13.0"
+  }
+}
